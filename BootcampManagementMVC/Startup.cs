@@ -1,4 +1,6 @@
 using BootcampManagementMVC.Data;
+using BootcampManagementMVC.Data.IRepositories;
+using BootcampManagementMVC.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +24,9 @@ namespace BootcampManagementMVC
         {
             // DbContext configuration:
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MSSQLConnString")));
+
+            // Service Configuration:
+            services.AddScoped<IBootcampGroupRepository, BootcampGroupRepository>();
 
             services.AddControllersWithViews();
         }
