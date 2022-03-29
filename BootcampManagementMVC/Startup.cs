@@ -1,8 +1,11 @@
 using BootcampManagementMVC.Data;
 using BootcampManagementMVC.Data.IRepositories;
 using BootcampManagementMVC.Data.Repositories;
+using BootcampManagementMVC.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +31,15 @@ namespace BootcampManagementMVC
             // Service Configuration:
             services.AddScoped<IBootcampGroupRepository, BootcampGroupRepository>();
 
+            // Authentication and Authorization:
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddMemoryCache();
+            services.AddSession();
+            services.AddAuthentication(options => 
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
+
             services.AddControllersWithViews();
         }
 
@@ -48,6 +60,11 @@ namespace BootcampManagementMVC
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
+
+            // Authentication and Authorization:
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseAuthorization();
 
@@ -60,6 +77,7 @@ namespace BootcampManagementMVC
 
             // Seed Database:
             AppDbSeeder.Seed(app);
+            AppDbSeeder.SeedUsersAndRolesAsync(app).Wait();
         }
     }
 }

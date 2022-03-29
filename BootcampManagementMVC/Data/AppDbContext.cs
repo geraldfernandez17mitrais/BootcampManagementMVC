@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BootcampManagementMVC.Data
 {
+    // Change DbContext to IdentityDbContext to use Identity Framework. Many tables for authentication purpose will be generated automaticaly when updating the database after creating new migration file.
     public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)

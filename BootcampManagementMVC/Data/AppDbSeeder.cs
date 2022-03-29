@@ -1,9 +1,12 @@
-﻿using BootcampManagementMVC.Models;
+﻿using BootcampManagementMVC.Data.Static;
+using BootcampManagementMVC.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BootcampManagementMVC.Data
 {
@@ -355,6 +358,58 @@ namespace BootcampManagementMVC.Data
                         },
                     });
                     context.SaveChanges();
+                }
+            }
+        }
+
+        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
+        {
+            using(var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+                // Roles
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                if (!await roleManager.RoleExistsAsync(UserRoles.CDCManager))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.CDCManager));
+
+                if (!await roleManager.RoleExistsAsync(UserRoles.BootcampMember))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.BootcampMember));
+
+                // User dummy for CDC Manager:
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                string cdcManagerEmail = "cdcmanager@mitrais.com";
+
+                var cdcManagerUser = await userManager.FindByEmailAsync(cdcManagerEmail);
+                if(cdcManagerUser == null)
+                {
+                    var newCdcManagerUser = new ApplicationUser()
+                    {
+                        FullName = "CDC Manager",
+                        UserName = "cdc-manager",
+                        Email = cdcManagerEmail,
+                        EmailConfirmed = true
+                    };
+
+                    await userManager.CreateAsync(newCdcManagerUser, "Mitrais@123#");
+                    await userManager.AddToRoleAsync(newCdcManagerUser, UserRoles.CDCManager);
+                }
+
+                // User dummy for Bootcamp Member:
+                string bootcampMemberEmail = "member@mitrais.com";
+
+                var bootcampMemberUser = await userManager.FindByEmailAsync(bootcampMemberEmail);
+                if (bootcampMemberUser == null)
+                {
+                    var newBootcampMemberUser = new ApplicationUser()
+                    {
+                        FullName = "Bootcamp Member",
+                        UserName = "bootcamp-member",
+                        Email = bootcampMemberEmail,
+                        EmailConfirmed = true
+                    };
+
+                    await userManager.CreateAsync(newBootcampMemberUser, "Mitrais@321#");
+                    await userManager.AddToRoleAsync(newBootcampMemberUser, UserRoles.BootcampMember);
                 }
             }
         }
