@@ -35,7 +35,7 @@ namespace BootcampManagementMVC
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
             services.AddMemoryCache();
             services.AddSession();
-            services.AddAuthentication(options => 
+            services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             });

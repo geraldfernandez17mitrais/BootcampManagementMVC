@@ -1,15 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BootcampManagementMVC.Models
 {
     public class ApplicationUser : IdentityUser
     {
         [Display(Name = "Full name")]
+        [StringLength(45, ErrorMessage = "Full Name must be less than 45 characters.")]
         public string FullName { get; set; }
     }
 }

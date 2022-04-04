@@ -4,20 +4,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BootcampManagementMVC.Models
 {
-    public class UserBootcamp
+    public class UserBootcamp : AuditAbleEntity
     {
         [Key]
         public int Id { get; set; }
 
         // HasOne Relationships
-        public int Bootcamp_group_id { get; set; }
-        [ForeignKey("Bootcamp_group_id")]
+        public int BootcampGroupId { get; set; }
+
+        [ForeignKey(nameof(BootcampGroupId))]
         public BootcampGroup BootcampGroup { get; set; }
 
         // Another field
-        public int User_id { get; set; }
-        public bool Is_active { get; set; }
-        public DateTime Join_date { get; set; }
-        public DateTime End_date { get; set; }
+        public int UserId { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime JoinDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

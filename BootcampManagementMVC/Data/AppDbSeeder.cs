@@ -14,7 +14,7 @@ namespace BootcampManagementMVC.Data
     {
         public static void Seed(IApplicationBuilder applicationBuilder)
         {
-            using(var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
 
@@ -27,15 +27,18 @@ namespace BootcampManagementMVC.Data
                     {
                         new StatusLearning()
                         {
-                            Name = "Entry"
+                            Name = "Entry",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new StatusLearning()
                         {
-                            Name = "On Progress"
+                            Name = "On Progress",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new StatusLearning()
                         {
-                            Name = "Finish"
+                            Name = "Finish",
+                            CreatedDate = DateTime.UtcNow
                         }
                     });
                     context.SaveChanges();
@@ -49,22 +52,26 @@ namespace BootcampManagementMVC.Data
                         new Belt()
                         {
                             Name = "White",
-                            Color = "#FFFFFF"
+                            Color = "#FFFFFF",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new Belt()
                         {
                             Name = "Yellow",
-                            Color = "#F9FF00"
+                            Color = "#F9FF00",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new Belt()
                         {
                             Name = "Orange",
-                            Color = "#DE7F00"
+                            Color = "#DE7F00",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new Belt()
                         {
                             Name = "Green",
-                            Color = "#00FF21"
+                            Color = "#00FF21",
+                            CreatedDate = DateTime.UtcNow
                         }
                     });
                     context.SaveChanges();
@@ -79,23 +86,27 @@ namespace BootcampManagementMVC.Data
                         {
                             Name = "Java Bootcamp",
                             Description = "Bootcamp for Java",
-                            Is_active = true
+                            IsActive = true,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new BootcampGroup()
                         {
                             Name = "DotNet Bootcamp",
-                            Is_active = true
+                            IsActive = true,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new BootcampGroup()
                         {
                             Name = "AngularJS Bootcamp",
                             Description = "Bootcamp for Angular",
-                            Is_active = false
+                            IsActive = false,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new BootcampGroup()
                         {
                             Name = "ReactJS Bootcamp",
-                            Is_active = true
+                            IsActive = true,
+                            CreatedDate = DateTime.UtcNow
                         }
                     });
                     context.SaveChanges();
@@ -108,48 +119,57 @@ namespace BootcampManagementMVC.Data
                     {
                         new Syllabus()
                         {
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Name = "Framework A"
+                            BootcampGroupId = new Random().Next(1, 4),
+                            Name = "Framework A",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new Syllabus()
                         {
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Name = "Framework B"
+                            BootcampGroupId = new Random().Next(1, 4),
+                            Name = "Framework B",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new Syllabus()
                         {
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Name = "Tech A"
+                            BootcampGroupId = new Random().Next(1, 4),
+                            Name = "Tech A",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new Syllabus()
                         {
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Name = "Tech B"
+                            BootcampGroupId = new Random().Next(1, 4),
+                            Name = "Tech B",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new Syllabus()
                         {
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Name = "Design Pattern A"
+                            BootcampGroupId = new Random().Next(1, 4),
+                            Name = "Design Pattern A",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new Syllabus()
                         {
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Name = "Design Pattern B"
+                            BootcampGroupId = new Random().Next(1, 4),
+                            Name = "Design Pattern B",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new Syllabus()
                         {
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Name = "Architecture A"
+                            BootcampGroupId = new Random().Next(1, 4),
+                            Name = "Architecture A",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new Syllabus()
                         {
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Name = "Architecture B"
+                            BootcampGroupId = new Random().Next(1, 4),
+                            Name = "Architecture B",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new Syllabus()
                         {
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Name = "Syllabus X"
+                            BootcampGroupId = new Random().Next(1, 4),
+                            Name = "Syllabus X",
+                            CreatedDate = DateTime.UtcNow
                         }
                     });
                     context.SaveChanges();
@@ -162,150 +182,171 @@ namespace BootcampManagementMVC.Data
                     {
                         new UserBootcamp()
                         {
-                            User_id = 1,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = false,
-                            Join_date = DateTime.Today
+                            UserId = 1,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = false,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 2,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = false,
-                            Join_date = DateTime.Today
+                            UserId = 2,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = false,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 3,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = false,
-                            Join_date = DateTime.Today
+                            UserId = 3,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = false,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 4,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = false,
-                            Join_date = DateTime.Today
+                            UserId = 4,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = false,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 5,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = false,
-                            Join_date = DateTime.Today
+                            UserId = 5,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = false,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 1,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = false,
-                            Join_date = DateTime.Today
+                            UserId = 1,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = false,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 1,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = true,
-                            Join_date = DateTime.Today
+                            UserId = 1,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = true,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 2,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = true,
-                            Join_date = DateTime.Today
+                            UserId = 2,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = true,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 3,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = true,
-                            Join_date = DateTime.Today
+                            UserId = 3,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = true,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 4,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = true,
-                            Join_date = DateTime.Today
+                            UserId = 4,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = true,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 5,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = true,
-                            Join_date = DateTime.Today
+                            UserId = 5,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = true,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 6,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = false,
-                            Join_date = DateTime.Today
+                            UserId = 6,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = false,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 7,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = false,
-                            Join_date = DateTime.Today
+                            UserId = 7,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = false,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 8,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = false,
-                            Join_date = DateTime.Today
+                            UserId = 8,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = false,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 9,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = false,
-                            Join_date = DateTime.Today
+                            UserId = 9,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = false,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 10,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = false,
-                            Join_date = DateTime.Today
+                            UserId = 10,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = false,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 6,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = true,
-                            Join_date = DateTime.Today
+                            UserId = 6,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = true,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 7,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = true,
-                            Join_date = DateTime.Today
+                            UserId = 7,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = true,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 8,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = true,
-                            Join_date = DateTime.Today
+                            UserId = 8,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = true,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 9,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = true,
-                            Join_date = DateTime.Today
+                            UserId = 9,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = true,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
-                            User_id = 10,
-                            Bootcamp_group_id = new Random().Next(1, 4),
-                            Is_active = true,
-                            Join_date = DateTime.Today
+                            UserId = 10,
+                            BootcampGroupId = new Random().Next(1, 4),
+                            IsActive = true,
+                            JoinDate = DateTime.Today,
+                            CreatedDate = DateTime.UtcNow
                         }
                     });
                     context.SaveChanges();
@@ -318,43 +359,53 @@ namespace BootcampManagementMVC.Data
                     {
                         new BootcampMember()
                         {
-                            Full_name = "Member 1"
+                            FullName = "Member 1",
+                            CreatedDate = DateTime.Now
                         },
                         new BootcampMember()
                         {
-                            Full_name = "Member 2"
+                            FullName = "Member 2",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new BootcampMember()
                         {
-                            Full_name = "Member 3"
+                            FullName = "Member 3",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new BootcampMember()
                         {
-                            Full_name = "Member 4"
+                            FullName = "Member 4",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new BootcampMember()
                         {
-                            Full_name = "Member 5"
+                            FullName = "Member 5",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new BootcampMember()
                         {
-                            Full_name = "Member 6"
+                            FullName = "Member 6",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new BootcampMember()
                         {
-                            Full_name = "Member 7"
+                            FullName = "Member 7",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new BootcampMember()
                         {
-                            Full_name = "Member 8"
+                            FullName = "Member 8",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new BootcampMember()
                         {
-                            Full_name = "Member 9"
+                            FullName = "Member 9",
+                            CreatedDate = DateTime.UtcNow
                         },
                         new BootcampMember()
                         {
-                            Full_name = "Member 10"
+                            FullName = "Member 10",
+                            CreatedDate = DateTime.UtcNow
                         },
                     });
                     context.SaveChanges();
@@ -364,7 +415,7 @@ namespace BootcampManagementMVC.Data
 
         public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
         {
-            using(var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
                 // Roles
                 var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -380,7 +431,7 @@ namespace BootcampManagementMVC.Data
                 string cdcManagerEmail = "cdcmanager@mitrais.com";
 
                 var cdcManagerUser = await userManager.FindByEmailAsync(cdcManagerEmail);
-                if(cdcManagerUser == null)
+                if (cdcManagerUser == null)
                 {
                     var newCdcManagerUser = new ApplicationUser()
                     {

@@ -4,14 +4,16 @@ using BootcampManagementMVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BootcampManagementMVC.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220331003010_Add-Audit-Fields")]
+    partial class AddAuditFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,23 +101,19 @@ namespace BootcampManagementMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("Created_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("created_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created_date");
+                    b.Property<DateTime>("Created_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifiedBy")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("modified_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("modified_date");
+                    b.Property<DateTime>("Modified_date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -134,31 +132,26 @@ namespace BootcampManagementMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("Created_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("created_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created_date");
+                    b.Property<DateTime>("Created_date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit")
-                        .HasColumnName("is_active");
+                    b.Property<bool>("Is_active")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("ModifiedBy")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("modified_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("modified_date");
+                    b.Property<DateTime>("Modified_date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -177,29 +170,24 @@ namespace BootcampManagementMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("Created_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("created_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created_date");
+                    b.Property<DateTime>("Created_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("Full_name")
                         .IsRequired()
                         .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)")
-                        .HasColumnName("full_name");
+                        .HasColumnType("nvarchar(45)");
 
-                    b.Property<string>("ModifiedBy")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("modified_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("modified_date");
+                    b.Property<DateTime>("Modified_date")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -213,45 +201,38 @@ namespace BootcampManagementMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BeltId")
-                        .HasColumnType("int")
-                        .HasColumnName("belt_id");
+                    b.Property<int>("Belt_id")
+                        .HasColumnType("int");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("Created_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("created_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created_date");
+                    b.Property<DateTime>("Created_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifiedBy")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("modified_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("modified_date");
+                    b.Property<DateTime>("Modified_date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("SortNo")
-                        .HasColumnType("int")
-                        .HasColumnName("sort_no");
+                    b.Property<int>("Sort_no")
+                        .HasColumnType("int");
 
-                    b.Property<int>("SyllabusId")
-                        .HasColumnType("int")
-                        .HasColumnName("syllabus_id");
+                    b.Property<int>("Syllabus_id")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BeltId");
+                    b.HasIndex("Belt_id");
 
-                    b.HasIndex("SyllabusId");
+                    b.HasIndex("Syllabus_id");
 
                     b.ToTable("objectives");
                 });
@@ -263,50 +244,43 @@ namespace BootcampManagementMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("Created_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("created_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created_date");
+                    b.Property<DateTime>("Created_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("EstimationMinuteTime")
-                        .HasColumnType("int")
-                        .HasColumnName("estimation_minute_time");
+                    b.Property<int>("Estimation_time")
+                        .HasColumnType("int");
 
                     b.Property<string>("Goal")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("ModifiedBy")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("modified_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("modified_date");
+                    b.Property<DateTime>("Modified_date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("ObjectiveId")
-                        .HasColumnType("int")
-                        .HasColumnName("objective_id");
+                    b.Property<int>("Objective_id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Reference")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SortNo")
-                        .HasColumnType("int")
-                        .HasColumnName("sort_no");
+                    b.Property<int>("Sort_no")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ObjectiveId");
+                    b.HasIndex("Objective_id");
 
                     b.ToTable("objective_items");
                 });
@@ -322,49 +296,40 @@ namespace BootcampManagementMVC.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("Created_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("created_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created_date");
+                    b.Property<DateTime>("Created_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("end_date");
+                    b.Property<DateTime>("End_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifiedBy")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("modified_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("modified_date");
+                    b.Property<DateTime>("Modified_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("ObjectiveItemId")
-                        .HasColumnType("int")
-                        .HasColumnName("objective_item_id");
+                    b.Property<int>("Objective_item_id")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("start_date");
+                    b.Property<DateTime>("Start_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("StatusLearningId")
-                        .HasColumnType("int")
-                        .HasColumnName("status_learning_id");
+                    b.Property<int>("Status_learning_id")
+                        .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("user_id");
+                    b.Property<int>("User_id")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ObjectiveItemId");
+                    b.HasIndex("Objective_item_id");
 
-                    b.HasIndex("StatusLearningId");
+                    b.HasIndex("Status_learning_id");
 
                     b.ToTable("objective_items_status_learnings");
                 });
@@ -376,50 +341,41 @@ namespace BootcampManagementMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BootcampGroupId")
-                        .HasColumnType("int")
-                        .HasColumnName("bootcamp_group_id");
+                    b.Property<int>("Bootcamp_group_id")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("ConfirmDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("confirm_date");
+                    b.Property<DateTime>("Confirm_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("Created_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("created_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created_date");
+                    b.Property<DateTime>("Created_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsApproved")
-                        .HasColumnType("bit")
-                        .HasColumnName("is_approved");
+                    b.Property<bool>("Is_approved")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("ManagerUserId")
-                        .HasColumnType("int")
-                        .HasColumnName("manager_user_id");
+                    b.Property<int>("Manager_user_id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ModifiedBy")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("modified_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("modified_date");
+                    b.Property<DateTime>("Modified_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("user_id");
+                    b.Property<int>("User_id")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BootcampGroupId");
+                    b.HasIndex("Bootcamp_group_id");
 
                     b.ToTable("requests");
                 });
@@ -431,23 +387,19 @@ namespace BootcampManagementMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("Created_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("created_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created_date");
+                    b.Property<DateTime>("Created_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifiedBy")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("modified_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("modified_date");
+                    b.Property<DateTime>("Modified_date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -466,22 +418,21 @@ namespace BootcampManagementMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BootcampGroupId")
-                        .HasColumnType("int")
-                        .HasColumnName("bootcamp_group_id");
+                    b.Property<int>("Bootcamp_group_id")
+                        .HasColumnType("int");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("Created_by")
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime>("Created_date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifiedBy")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTime>("Modified_date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -491,7 +442,7 @@ namespace BootcampManagementMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BootcampGroupId");
+                    b.HasIndex("Bootcamp_group_id");
 
                     b.ToTable("syllabuses");
                 });
@@ -503,47 +454,38 @@ namespace BootcampManagementMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BootcampGroupId")
-                        .HasColumnType("int")
-                        .HasColumnName("bootcamp_group_id");
+                    b.Property<int>("Bootcamp_group_id")
+                        .HasColumnType("int");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("Created_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("created_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created_date");
+                    b.Property<DateTime>("Created_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("end_date");
+                    b.Property<DateTime>("End_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit")
-                        .HasColumnName("is_active");
+                    b.Property<bool>("Is_active")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTime>("JoinDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("join_date");
+                    b.Property<DateTime>("Join_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifiedBy")
+                    b.Property<string>("Modified_by")
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("modified_by");
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("modified_date");
+                    b.Property<DateTime>("Modified_date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("user_id");
+                    b.Property<int>("User_id")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BootcampGroupId");
+                    b.HasIndex("Bootcamp_group_id");
 
                     b.ToTable("user_bootcamps");
                 });
@@ -683,13 +625,13 @@ namespace BootcampManagementMVC.Migrations
                 {
                     b.HasOne("BootcampManagementMVC.Models.Belt", "Belt")
                         .WithMany("Objectives")
-                        .HasForeignKey("BeltId")
+                        .HasForeignKey("Belt_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BootcampManagementMVC.Models.Syllabus", "Syllabus")
                         .WithMany("Objectives")
-                        .HasForeignKey("SyllabusId")
+                        .HasForeignKey("Syllabus_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -702,7 +644,7 @@ namespace BootcampManagementMVC.Migrations
                 {
                     b.HasOne("BootcampManagementMVC.Models.Objective", "Objective")
                         .WithMany("ObjectiveItems")
-                        .HasForeignKey("ObjectiveId")
+                        .HasForeignKey("Objective_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -713,13 +655,13 @@ namespace BootcampManagementMVC.Migrations
                 {
                     b.HasOne("BootcampManagementMVC.Models.ObjectiveItem", "ObjectiveItem")
                         .WithMany("ObjectiveItemsStatusLearnings")
-                        .HasForeignKey("ObjectiveItemId")
+                        .HasForeignKey("Objective_item_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BootcampManagementMVC.Models.StatusLearning", "StatusLearning")
                         .WithMany("ObjectiveItemsStatusLearnings")
-                        .HasForeignKey("StatusLearningId")
+                        .HasForeignKey("Status_learning_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -732,7 +674,7 @@ namespace BootcampManagementMVC.Migrations
                 {
                     b.HasOne("BootcampManagementMVC.Models.BootcampGroup", "BootcampGroup")
                         .WithMany("Requests")
-                        .HasForeignKey("BootcampGroupId")
+                        .HasForeignKey("Bootcamp_group_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -743,7 +685,7 @@ namespace BootcampManagementMVC.Migrations
                 {
                     b.HasOne("BootcampManagementMVC.Models.BootcampGroup", "BootcampGroup")
                         .WithMany("Syllabuses")
-                        .HasForeignKey("BootcampGroupId")
+                        .HasForeignKey("Bootcamp_group_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -754,7 +696,7 @@ namespace BootcampManagementMVC.Migrations
                 {
                     b.HasOne("BootcampManagementMVC.Models.BootcampGroup", "BootcampGroup")
                         .WithMany("UserBootcamps")
-                        .HasForeignKey("BootcampGroupId")
+                        .HasForeignKey("Bootcamp_group_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

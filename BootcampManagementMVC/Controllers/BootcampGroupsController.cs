@@ -6,16 +6,16 @@ namespace BootcampManagementMVC.Controllers
 {
     public class BootcampGroupsController : Controller
     {
-        private readonly IBootcampGroupRepository _repo;
+        private readonly IBootcampGroupRepository _repoBootcampGroup;
 
-        public BootcampGroupsController(IBootcampGroupRepository repo)
+        public BootcampGroupsController(IBootcampGroupRepository repoBootcampGroup)
         {
-            _repo = repo;
+            _repoBootcampGroup = repoBootcampGroup;
         }
 
         public async Task<IActionResult> Index()
         {
-            var allBootcampGroups = await _repo.GetBootcampGroups();
+            var allBootcampGroups = await _repoBootcampGroup.GetAsync();
             return View(allBootcampGroups);
         }
     }

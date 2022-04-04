@@ -30,7 +30,7 @@ namespace BootcampManagementMVC.Controllers
             var user = await _userManager.FindByEmailAsync(loginVM.EmailAddress);
 
             // if user is not null, check the password:
-            if(user != null)
+            if (user != null)
             {
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, loginVM.Password);
 

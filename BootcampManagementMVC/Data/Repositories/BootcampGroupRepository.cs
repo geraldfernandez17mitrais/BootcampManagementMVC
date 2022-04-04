@@ -3,6 +3,7 @@ using BootcampManagementMVC.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BootcampManagementMVC.Data.Repositories
@@ -16,56 +17,89 @@ namespace BootcampManagementMVC.Data.Repositories
             _context = context;
         }
 
-        public async Task<BootcampGroup> AddBootcampGroup(BootcampGroup bootcamp_group)
+        public async Task<BootcampGroup> AddAsync(BootcampGroup bootcampGroup)
         {
             try
             {
-                await _context.bootcamp_groups.AddAsync(bootcamp_group);
+                await _context.bootcamp_groups.AddAsync(bootcampGroup);
                 await _context.SaveChangesAsync();
-                var bootcamp_group_new = await GetBootcampGroupById(bootcamp_group.Id);
+                var bootcamp_group_new = await GetByIdAsync(bootcampGroup.Id);
                 return bootcamp_group_new;
             }
-            catch
+            catch (Exception ex)
             {
-                return null;
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<int> DeleteBootcampGroup(int bootcamp_group_id)
+        public async Task<int?> DeleteAsync(BootcampGroup bootcampGroup)
         {
-            var bootcamp_group = await _context.bootcamp_groups.FindAsync(bootcamp_group_id);
-            if (bootcamp_group == null)
+            try
             {
-                return 0; // bootcamp_group not found
+                _context.bootcamp_groups.Remove(bootcampGroup);
+                await _context.SaveChangesAsync();
+                return bootcampGroup.Id;
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<BootcampGroup>> GetAsync()
+        {
+            try
+            {
+                return await _context.bootcamp_groups.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<BootcampGroup> GetByIdAsync(int bootcampGroupId)
+        {
+            try
+            {
+                return await _context.bootcamp_groups.FindAsync(bootcampGroupId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<BootcampGroup> GetByNameAsync(string bootcampGroupName)
+        {
+            try
+            {
+                return await _context.bootcamp_groups.FirstOrDefaultAsync(bg => bg.Name.ToLower().Trim() == bootcampGroupName.ToLower().Trim());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<BootcampGroup> UpdateAsync(BootcampGroup bootcampGroup)
+        {
+            var bootcamp_group_existing = _context.bootcamp_groups.FirstOrDefault(bg => bg.Id == bootcampGroup.Id);
+
+            bootcamp_group_existing.Name = bootcampGroup.Name;
+            bootcamp_group_existing.Description = bootcampGroup.Description;
+            bootcamp_group_existing.IsActive = bootcampGroup.IsActive;
 
             try
             {
-                _context.bootcamp_groups.Remove(bootcamp_group);
+                _context.Entry(bootcamp_group_existing).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
+                return bootcampGroup;
             }
-            catch
+            catch (Exception ex)
             {
-                return 0;
+                throw new Exception(ex.Message);
             }
-
-            return bootcamp_group.Id;
-        }
-
-        public async Task<BootcampGroup> GetBootcampGroupById(int bootcamp_group_id) => await _context.bootcamp_groups.FindAsync(bootcamp_group_id);
-
-        public async Task<BootcampGroup> GetBootcampGroupByName(string bootcamp_group_name) => await _context.bootcamp_groups.FirstOrDefaultAsync(bg => bg.Name.ToLower().Trim() == bootcamp_group_name.ToLower().Trim());
-
-        public async Task<List<BootcampGroup>> GetBootcampGroups() => await _context.bootcamp_groups.ToListAsync();
-
-        public Task<BootcampGroup> UpdateBootcampGroup(BootcampGroup bootcamp_group)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UpdateBootcampGroupStatus(int bootcamp_group_id, bool is_active)
-        {
-            throw new NotImplementedException();
         }
     }
 }
