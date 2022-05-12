@@ -1,22 +1,24 @@
-﻿using BootcampManagementMVC.Data.IRepositories;
+﻿using BootcampManagementMVC.BL.Interfaces;
+using BootcampManagementMVC.BL.ViewModels.BootcampGroups;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BootcampManagementMVC.Controllers
 {
     public class BootcampGroupsController : Controller
     {
-        private readonly IBootcampGroupRepository _repoBootcampGroup;
+        private readonly IBootcampGroupService _serviceBootcampGroup;
 
-        public BootcampGroupsController(IBootcampGroupRepository repoBootcampGroup)
+        public BootcampGroupsController(IBootcampGroupService serviceBootcampGroup)
         {
-            _repoBootcampGroup = repoBootcampGroup;
+            _serviceBootcampGroup = serviceBootcampGroup;
         }
 
         public async Task<IActionResult> Index()
         {
-            var allBootcampGroups = await _repoBootcampGroup.GetAsync();
-            return View(allBootcampGroups);
+            IEnumerable<BootcampGroupVM> bootcampGroups = await _serviceBootcampGroup.GetAsync();
+            return View(bootcampGroups);
         }
     }
 }

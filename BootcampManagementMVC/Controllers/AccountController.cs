@@ -1,6 +1,6 @@
-﻿using BootcampManagementMVC.Data;
-using BootcampManagementMVC.Data.ViewModels;
-using BootcampManagementMVC.Models;
+﻿using BootcampManagementMVC.BL.ViewModels;
+using BootcampManagementMVC.DA;
+using BootcampManagementMVC.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

@@ -1,7 +1,10 @@
-using BootcampManagementMVC.Data;
-using BootcampManagementMVC.Data.IRepositories;
-using BootcampManagementMVC.Data.Repositories;
-using BootcampManagementMVC.Models;
+using BootcampManagementMVC.BL.Helpers;
+using BootcampManagementMVC.BL.Interfaces;
+using BootcampManagementMVC.BL.Services;
+using BootcampManagementMVC.DA;
+using BootcampManagementMVC.DA.Interfaces;
+using BootcampManagementMVC.DA.Repositories;
+using BootcampManagementMVC.Domain.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,9 +31,6 @@ namespace BootcampManagementMVC
             // DbContext configuration:
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MSSQLConnString")));
 
-            // Service Configuration:
-            services.AddScoped<IBootcampGroupRepository, BootcampGroupRepository>();
-
             // Authentication and Authorization:
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
             services.AddMemoryCache();
@@ -41,6 +41,16 @@ namespace BootcampManagementMVC
             });
 
             services.AddControllersWithViews();
+
+            // Repositories Dependency Injection:
+            services.AddScoped<IBootcampGroupRepository, BootcampGroupRepository>();
+            services.AddScoped<IUserBootcampRepository, UserBootcampRepository>();
+
+            // Services Dependency Injection:
+            services.AddScoped<IBootcampGroupService, BootcampGroupService>();
+
+            // AutoMapper DI:
+            services.AddAutoMapper(typeof(MappingProfiles));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

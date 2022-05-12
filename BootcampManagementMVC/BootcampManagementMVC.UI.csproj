@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.15" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.15">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\BootcampManagementMVC.BL\BootcampManagementMVC.BL.csproj" />
+		<ProjectReference Include="..\BootcampManagementMVC.DA\BootcampManagementMVC.DA.csproj" />
+		<ProjectReference Include="..\BootcampManagementMVC.Domain\BootcampManagementMVC.Domain.csproj" />
+	</ItemGroup>
+</Project>
