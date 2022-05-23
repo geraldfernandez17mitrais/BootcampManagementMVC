@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using BootcampManagementMVC.BL.ViewModels.BootcampGroups;
+using BootcampManagementMVC.BL.Dtos.BootcampGroups;
+using BootcampManagementMVC.BL.Dtos.UserBootcamps;
 using BootcampManagementMVC.Domain.Models;
 
 namespace BootcampManagementMVC.BL.Helpers
@@ -8,16 +9,14 @@ namespace BootcampManagementMVC.BL.Helpers
     {
         public MappingProfiles()
         {
-            // Dto:
-            //CreateMap<BootcampGroupAndTotalMemberDto, BootcampGroup>();
-
             // BootcampGroup:
-            CreateMap<BootcampGroupVM, BootcampGroup>().ReverseMap();
-            //CreateMap<BootcampGroupPostDto, BootcampGroup>();
+            CreateMap<BootcampGroupDto, BootcampGroup>();
+            CreateMap<BootcampGroup, BootcampGroupDto>()
+                .ForMember(dest => dest.SyllabusId, opt => opt.MapFrom(src => src.Syllabus.Id));
+            CreateMap<BootcampGroupAndTotalMemberDto, BootcampGroup>();
 
             // UserBootcamp:
-            //CreateMap<UserBootcampDto, UserBootcamp>().ReverseMap();
-            //CreateMap<UserBootcampPostDto, UserBootcamp>();
+            CreateMap<UserBootcampDto, UserBootcamp>().ReverseMap();
         }
     }
 }

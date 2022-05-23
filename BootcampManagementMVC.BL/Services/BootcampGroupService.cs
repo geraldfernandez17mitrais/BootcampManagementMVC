@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using BootcampManagementMVC.BL.Dtos.BootcampGroups;
+using BootcampManagementMVC.BL.Dtos.UserBootcamps;
 using BootcampManagementMVC.BL.Interfaces;
-using BootcampManagementMVC.BL.ViewModels.BootcampGroups;
 using BootcampManagementMVC.DA.Interfaces;
 using BootcampManagementMVC.Domain.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BootcampManagementMVC.BL.Services
@@ -21,129 +23,50 @@ namespace BootcampManagementMVC.BL.Services
             _mapper = mapper;
         }
 
-        //public async Task AddAsync(BootcampGroupPostDto bootcampGroupPostDto)
-        //{
-        //    // convert from dto object to model object:
-        //    BootcampGroup bootcampGroup = _mapper.Map<BootcampGroupPostDto, BootcampGroup>(bootcampGroupPostDto);
-
-        //    // add syllabus data to bootcamp:
-        //    Syllabus syllabus = new Syllabus();
-        //    syllabus.Name = bootcampGroup.Name;
-        //    bootcampGroup.Syllabus = syllabus;
-
-        //    // check existing name:
-        //    BootcampGroup bootcampGroupRepo = await _repoBootcampGroup.GetByNameAsync(bootcampGroup.Name);
-        //    if (bootcampGroupRepo is not null)
-        //    {
-        //        throw new Exception(ResponseCode.bootcampGroupAlreadyExist);
-        //    }
-
-        //    // add to bootcamp_group:
-        //    await _repoBootcampGroup.AddAsync(bootcampGroup);
-        //}
-
-        //public async Task DeleteAsync(int bootcampGroupId)
-        //{
-        //    // check existing data:
-        //    BootcampGroup bootcampGroupExisting = await _repoBootcampGroup.GetByIdAsync(bootcampGroupId);
-        //    if (bootcampGroupExisting is null)
-        //    {
-        //        throw new Exception(ResponseCode.bootcampGroupNotFound);
-        //    }
-
-        //    // delete from database:
-        //    await _repoBootcampGroup.DeleteAsync(bootcampGroupExisting);
-        //}
-
-        public async Task<IEnumerable<BootcampGroupVM>> GetAsync()
+        public async Task<IEnumerable<BootcampGroupDto>> GetAsync()
         {
             // get list data from repository:
             IEnumerable<BootcampGroup> listBootcampGroup = await _repoBootcampGroup.GetAsync();
 
             // convert list of model object to list of dto object, then return the result:
-            return _mapper.Map<IEnumerable<BootcampGroup>, IEnumerable<BootcampGroupVM>>(listBootcampGroup);
+            return _mapper.Map<IEnumerable<BootcampGroup>, IEnumerable<BootcampGroupDto>>(listBootcampGroup);
         }
 
-        //public async Task<List<BootcampGroupAndTotalMemberDto>> GetWithTotalMembersAsync()
-        //{
-        //    List<BootcampGroup> listBootcampGroup = await _repoBootcampGroup.GetAsync();
-        //    List<BootcampGroupDto> listBootcampGroupDto = _mapper.Map<List<BootcampGroup>, List<BootcampGroupDto>>(listBootcampGroup);
-        //    List<UserBootcamp> listUserBootcamp = await _repoUserBootcamp.GetAsync();
-        //    List<BootcampGroupAndTotalMemberDto> listBootcampGroupAndTotalMember = new List<BootcampGroupAndTotalMemberDto>();
+        public async Task<IEnumerable<BootcampGroupAndTotalMemberDto>> GetWithTotalMembersAsync()
+        {
+            IEnumerable<BootcampGroup> listBootcampGroup = await _repoBootcampGroup.GetAsync();
+            IEnumerable<BootcampGroupDto> listBootcampGroupDto = _mapper.Map<IEnumerable<BootcampGroup>, IEnumerable<BootcampGroupDto>>(listBootcampGroup);
+            IEnumerable<UserBootcamp> listUserBootcamp = await _repoUserBootcamp.GetAsync();
 
-        //    if (listUserBootcamp is null)
-        //    {
-        //        listBootcampGroupAndTotalMember = _mapper.Map<List<BootcampGroup>, List<BootcampGroupAndTotalMemberDto>>(listBootcampGroup);
-        //    }
-        //    else
-        //    {
-        //        List<UserBootcampDto> listUserBootcampDto = _mapper.Map<List<UserBootcamp>, List<UserBootcampDto>>(listUserBootcamp);
-        //        List<UserBootcamp> ListActiveMembers = await _repoUserBootcamp.GetActiveMembersAsync();
+            if (listUserBootcamp is null)
+            {
+                IEnumerable<BootcampGroupAndTotalMemberDto> listBootcampGroupAndTotalMember = _mapper.Map<IEnumerable<BootcampGroup>, IEnumerable<BootcampGroupAndTotalMemberDto>>(listBootcampGroup);
 
-        //        IEnumerable<BootcampGroupAndTotalMemberDto> getBootcampGroupAndTotalMemberQuery =
-        //            from bg in listBootcampGroupDto
-        //            join ub in ListActiveMembers
-        //            on bg.Id equals ub.BootcampGroupId into g
-        //            select new BootcampGroupAndTotalMemberDto
-        //            {
-        //                Id = bg.Id,
-        //                Name = bg.Name,
-        //                Description = bg.Description,
-        //                IsActive = bg.IsActive,
-        //                CountMember = g.Count()
-        //            };
+                return listBootcampGroupAndTotalMember;
+            }
+            else
+            {
+                IEnumerable<UserBootcampDto> listUserBootcampDto = _mapper.Map<IEnumerable<UserBootcamp>, IEnumerable<UserBootcampDto>>(listUserBootcamp);
+                IEnumerable<UserBootcamp> ListActiveMembers = await _repoUserBootcamp.GetActiveMembersAsync();
 
-        //        listBootcampGroupAndTotalMember = getBootcampGroupAndTotalMemberQuery.ToList();
-        //    }
+                IEnumerable<BootcampGroupAndTotalMemberDto> getBootcampGroupAndTotalMemberQuery =
+                    from bg in listBootcampGroupDto
+                    join ub in ListActiveMembers
+                    on bg.Id equals ub.BootcampGroupId into g
+                    select new BootcampGroupAndTotalMemberDto
+                    {
+                        Id = bg.Id,
+                        SyllabusId = bg.SyllabusId,
+                        Name = bg.Name,
+                        Description = bg.Description,
+                        IsActive = bg.IsActive,
+                        CountMember = g.Count()
+                    };
 
-        //    return listBootcampGroupAndTotalMember;
-        //}
+                IEnumerable<BootcampGroupAndTotalMemberDto> listBootcampGroupAndTotalMember = getBootcampGroupAndTotalMemberQuery.ToList();
 
-        //public async Task<BootcampGroupDto> GetByIdAsync(int bootcampGroupId)
-        //{
-        //    BootcampGroup bootcampGroupExisting = await _repoBootcampGroup.GetByIdAsync(bootcampGroupId);
-        //    return _mapper.Map<BootcampGroup, BootcampGroupDto>(bootcampGroupExisting);
-        //}
-
-        //public async Task UpdateAsync(BootcampGroupDto bootcampGroupDto)
-        //{
-        //    // convert from dto object to model object:
-        //    BootcampGroup bootcampGroup = _mapper.Map<BootcampGroupDto, BootcampGroup>(bootcampGroupDto);
-
-        //    // check existing data:
-        //    BootcampGroup bootcampGroupExisting = await _repoBootcampGroup.GetByIdAsync(bootcampGroup.Id);
-        //    if (bootcampGroupExisting is null)
-        //    {
-        //        throw new Exception(ResponseCode.bootcampGroupNotFound);
-        //    }
-
-        //    // edit syllabus data on bootcamp:
-        //    bootcampGroupExisting.Syllabus.Name = bootcampGroup.Name;
-        //    bootcampGroup.Syllabus = bootcampGroupExisting.Syllabus;
-
-        //    // update model to bootcamp_group:
-        //    await _repoBootcampGroup.UpdateAsync(bootcampGroup);
-        //}
-
-        //public async Task UpdateStatusAsync(int bootcampGroupId, bool isActive)
-        //{
-        //    // check existing data:
-        //    BootcampGroup bootcampGroupExisting = await _repoBootcampGroup.GetByIdAsync(bootcampGroupId);
-        //    if (bootcampGroupExisting is null)
-        //    {
-        //        throw new Exception(ResponseCode.bootcampGroupNotFound);
-        //    }
-
-        //    List<UserBootcamp> listUserBootcamp = await _repoUserBootcamp.GetActiveMembersByBootcampGroupIdAsync(bootcampGroupId);
-
-        //    // check if any members in this bootcamp_group when wants to inactive a bootcamp:
-        //    if (!isActive && listUserBootcamp.Count() > 0)
-        //    {
-        //        throw new Exception(ResponseCode.bootcampGroupCannotBeChangedToInactive);
-        //    }
-
-        //    bootcampGroupExisting.IsActive = isActive;
-        //    await _repoBootcampGroup.UpdateAsync(bootcampGroupExisting);
-        //}
+                return listBootcampGroupAndTotalMember;
+            }
+        }
     }
 }

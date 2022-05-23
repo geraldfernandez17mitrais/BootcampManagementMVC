@@ -129,18 +129,21 @@ namespace BootcampManagementMVC.DA
                         new UserBootcamp()
                         {
                             BootcampGroupId = new Random().Next(1, 4),
+                            UserId = 1,
                             IsActive = true,
                             JoinDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
                             BootcampGroupId = new Random().Next(1, 4),
+                            UserId = 1,
                             IsActive = false,
                             JoinDate = DateTime.UtcNow
                         },
                         new UserBootcamp()
                         {
                             BootcampGroupId = new Random().Next(1, 4),
+                            UserId = 3,
                             IsActive = true,
                             JoinDate = DateTime.UtcNow
                         }
@@ -188,43 +191,53 @@ namespace BootcampManagementMVC.DA
                     {
                         new BootcampMember()
                         {
-                            FullName = "Adaline Reichel"
+                            FullName = "Adaline Reichel",
+                            Grade = "PG"
                         },
                         new BootcampMember()
                         {
-                            FullName = "Noemy Vandervort"
+                            FullName = "Noemy Vandervort",
+                            Grade = "PG"
                         },
                         new BootcampMember()
                         {
-                            FullName = "Lexi OConner"
+                            FullName = "Lexi OConner",
+                            Grade = "AP"
                         },
                         new BootcampMember()
                         {
-                            FullName = "Gracie Weber"
+                            FullName = "Gracie Weber",
+                            Grade = "AP"
                         },
                         new BootcampMember()
                         {
-                            FullName = "Roscoe Johns"
+                            FullName = "Roscoe Johns",
+                            Grade = "AP"
                         },
                         new BootcampMember()
                         {
-                            FullName = "Emmett Lebsack"
+                            FullName = "Emmett Lebsack",
+                            Grade = "AN"
                         },
                         new BootcampMember()
                         {
-                            FullName = "Keegan Thiel"
+                            FullName = "Keegan Thiel",
+                            Grade = "AN"
                         },
                         new BootcampMember()
                         {
-                            FullName = "Wellington Koelpin"
+                            FullName = "Wellington Koelpin",
+                            Grade = "AN"
                         },
                         new BootcampMember()
                         {
-                            FullName = "Karley Kiehn V"
+                            FullName = "Karley Kiehn V",
+                            Grade = "PG"
                         },
                         new BootcampMember()
                         {
-                            FullName = "John Doe"
+                            FullName = "John Doe",
+                            Grade = "AP"
                         },
                     });
                     context.SaveChanges();

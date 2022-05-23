@@ -15,11 +15,12 @@ namespace BootcampManagementMVC.DA.Repositories
         {
             _context = context;
         }
+
         public async Task<IEnumerable<BootcampGroup>> GetAsync()
         {
             try
             {
-                return await _context.bootcamp_groups.ToListAsync();
+                return await _context.bootcamp_groups.Include(b => b.Syllabus).ToListAsync();
             }
             catch (Exception ex)
             {

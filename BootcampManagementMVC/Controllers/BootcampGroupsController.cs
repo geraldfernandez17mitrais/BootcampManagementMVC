@@ -1,5 +1,5 @@
-﻿using BootcampManagementMVC.BL.Interfaces;
-using BootcampManagementMVC.BL.ViewModels.BootcampGroups;
+﻿using BootcampManagementMVC.BL.Dtos.BootcampGroups;
+using BootcampManagementMVC.BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,7 +17,7 @@ namespace BootcampManagementMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<BootcampGroupVM> bootcampGroups = await _serviceBootcampGroup.GetAsync();
+            IEnumerable<BootcampGroupAndTotalMemberDto> bootcampGroups = await _serviceBootcampGroup.GetWithTotalMembersAsync();
             return View(bootcampGroups);
         }
     }
