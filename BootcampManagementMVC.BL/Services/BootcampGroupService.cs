@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using BootcampManagementMVC.BL.Dtos.BootcampGroups;
 using BootcampManagementMVC.BL.Dtos.UserBootcamps;
+using BootcampManagementMVC.BL.Helpers;
 using BootcampManagementMVC.BL.Interfaces;
 using BootcampManagementMVC.DA.Interfaces;
 using BootcampManagementMVC.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +23,27 @@ namespace BootcampManagementMVC.BL.Services
             _repoBootcampGroup = repoBootcampGroup;
             _repoUserBootcamp = repoUserBootcamp;
             _mapper = mapper;
+        }
+
+        public async Task AddAsync(BootcampGroupPostDto bootcampGroupPostDto)
+        {
+            // convert from dto object to model object:
+            BootcampGroup bootcampGroup = _mapper.Map<BootcampGroupPostDto, BootcampGroup>(bootcampGroupPostDto);
+
+            // add syllabus data to bootcamp:
+            Syllabus syllabus = new Syllabus();
+            syllabus.Name = bootcampGroup.Name;
+            bootcampGroup.Syllabus = syllabus;
+
+            // check existing name:
+            BootcampGroup bootcampGroupRepo = await _repoBootcampGroup.GetByNameAsync(bootcampGroup.Name);
+            if (bootcampGroupRepo is not null)
+            {
+                throw new Exception(ResponseCode.bootcampGroupAlreadyExist);
+            }
+
+            // add to bootcamp_group:
+            await _repoBootcampGroup.AddAsync(bootcampGroup);
         }
 
         public async Task<IEnumerable<BootcampGroupDto>> GetAsync()

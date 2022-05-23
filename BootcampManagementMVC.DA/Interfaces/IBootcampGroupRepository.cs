@@ -6,6 +6,8 @@ namespace BootcampManagementMVC.DA.Interfaces
 {
     public interface IBootcampGroupRepository
     {
-        public Task<IEnumerable<BootcampGroup>> GetAsync();
+        Task<IEnumerable<BootcampGroup>> GetAsync();
+        Task AddAsync(BootcampGroup bootcampGroup);
+        Task<BootcampGroup> GetByNameAsync(string bootcampGroupName);
     }
 }

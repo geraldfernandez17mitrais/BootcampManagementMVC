@@ -6,7 +6,7 @@ namespace BootcampManagementMVC.DA.Interfaces
 {
     public interface IUserBootcampRepository
     {
-        public Task<IEnumerable<UserBootcamp>> GetAsync();
-        public Task<IEnumerable<UserBootcamp>> GetActiveMembersAsync();
+        Task<IEnumerable<UserBootcamp>> GetAsync();
+        Task<IEnumerable<UserBootcamp>> GetActiveMembersAsync();
     }
 }

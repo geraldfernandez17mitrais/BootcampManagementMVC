@@ -10,6 +10,7 @@ namespace BootcampManagementMVC.BL.Dtos.BootcampGroups
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Status is required.")]
+        [Display(Name = "Status")]
         public bool IsActive { get; set; }
     }
 }

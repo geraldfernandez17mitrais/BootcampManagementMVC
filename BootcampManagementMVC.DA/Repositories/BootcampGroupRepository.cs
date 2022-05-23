@@ -16,11 +16,36 @@ namespace BootcampManagementMVC.DA.Repositories
             _context = context;
         }
 
+        public async Task AddAsync(BootcampGroup bootcampGroup)
+        {
+            try
+            {
+                await _context.bootcamp_groups.AddAsync(bootcampGroup);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<IEnumerable<BootcampGroup>> GetAsync()
         {
             try
             {
                 return await _context.bootcamp_groups.Include(b => b.Syllabus).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<BootcampGroup> GetByNameAsync(string bootcampGroupName)
+        {
+            try
+            {
+                return await _context.bootcamp_groups.FirstOrDefaultAsync(bg => bg.Name.ToLower().Trim() == bootcampGroupName.ToLower().Trim());
             }
             catch (Exception ex)
             {
