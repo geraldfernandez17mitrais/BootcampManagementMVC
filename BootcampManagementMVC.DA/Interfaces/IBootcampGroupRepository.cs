@@ -11,5 +11,6 @@ namespace BootcampManagementMVC.DA.Interfaces
         Task<BootcampGroup> GetByNameAsync(string bootcampGroupName);
         Task<BootcampGroup> GetByIdAsync(int bootcampGroupId);
         Task UpdateAsync(BootcampGroup bootcampGroup);
+        Task DeleteAsync(BootcampGroup bootcampGroup);
     }
 }

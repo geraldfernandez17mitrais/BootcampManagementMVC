@@ -30,6 +30,19 @@ namespace BootcampManagementMVC.DA.Repositories
             }
         }
 
+        public async Task DeleteAsync(BootcampGroup bootcampGroup)
+        {
+            try
+            {
+                _context.bootcamp_groups.Remove(bootcampGroup);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<IEnumerable<BootcampGroup>> GetAsync()
         {
             try

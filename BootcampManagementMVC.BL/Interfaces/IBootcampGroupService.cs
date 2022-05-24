@@ -11,5 +11,6 @@ namespace BootcampManagementMVC.BL.Interfaces
         Task AddAsync(BootcampGroupPostDto bootcampGroupPostDto);
         Task<BootcampGroupDto> GetByIdAsync(int bootcampGroupId);
         Task UpdateAsync(int bootcampGroupId, BootcampGroupPutDto bootcampGroupDto);
+        Task DeleteAsync(int bootcampGroupId);
     }
 }

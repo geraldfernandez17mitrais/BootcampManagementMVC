@@ -230,5 +230,19 @@ namespace BootcampManagementMVC.UnitTests.Services
             returnTask.Exception.InnerExceptions.Count().Should().Be(1);
             returnTask.Exception.InnerException.Message.Should().Be(ResponseCode.bootcampGroupCannotBeChangedToInactive);
         }
+
+        [Fact]
+        public void DeleteAsync_BootcampGroupNotFound_ThrowOneException()
+        {
+            // Arrange
+            _mockBootcampGroupRepository.Setup(c => c.GetByIdAsync(It.IsAny<int>())).Returns(Task.FromResult<BootcampGroup>(null));
+
+            // Act
+            Task returnTask = _sut.DeleteAsync(It.IsAny<int>());
+
+            // Assert
+            returnTask.Exception.InnerExceptions.Count().Should().Be(1);
+            returnTask.Exception.InnerException.Message.Should().Be(ResponseCode.bootcampGroupNotFound);
+        }
     }
 }

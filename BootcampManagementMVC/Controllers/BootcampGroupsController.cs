@@ -84,5 +84,26 @@ namespace BootcampManagementMVC.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        // Get: Actors/Delete/1
+        public async Task<ActionResult> Delete(int id)
+        {
+            BootcampGroupDto bootcampGroupDto = await _serviceBootcampGroup.GetByIdAsync(id);
+            if (bootcampGroupDto == null)
+                return View("NotFound");
+
+            return View(bootcampGroupDto);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            BootcampGroupDto bootcampGroupDto = await _serviceBootcampGroup.GetByIdAsync(id);
+            if (bootcampGroupDto == null)
+                return View("NotFound");
+
+            await _serviceBootcampGroup.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

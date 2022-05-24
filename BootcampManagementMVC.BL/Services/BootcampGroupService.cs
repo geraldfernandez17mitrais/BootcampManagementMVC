@@ -46,6 +46,19 @@ namespace BootcampManagementMVC.BL.Services
             await _repoBootcampGroup.AddAsync(bootcampGroup);
         }
 
+        public async Task DeleteAsync(int bootcampGroupId)
+        {
+            // check existing data:
+            BootcampGroup bootcampGroupExisting = await _repoBootcampGroup.GetByIdAsync(bootcampGroupId);
+            if (bootcampGroupExisting is null)
+            {
+                throw new Exception(ResponseCode.bootcampGroupNotFound);
+            }
+
+            // delete from database:
+            await _repoBootcampGroup.DeleteAsync(bootcampGroupExisting);
+        }
+
         public async Task<IEnumerable<BootcampGroupDto>> GetAsync()
         {
             // get list data from repository:
