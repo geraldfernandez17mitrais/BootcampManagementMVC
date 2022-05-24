@@ -173,5 +173,62 @@ namespace BootcampManagementMVC.UnitTests.Services
             returnTask.Exception.InnerExceptions.Count().Should().Be(1);
             returnTask.Exception.InnerException.Message.Should().Be(ResponseCode.bootcampGroupAlreadyExist);
         }
+
+        [Fact]
+        public void UpdateAsync_IdNotFound_ThrowOneException()
+        {
+            // Arrange
+            _mockBootcampGroupRepository.Setup(c => c.GetByIdAsync(_bootcampGroupPutDto.Id)).Returns(Task.FromResult<BootcampGroup>(null));
+
+            // Act
+            Task returnTask = _sut.UpdateAsync(_bootcampGroupPutDto.Id, _bootcampGroupPutDto);
+
+            // Assert
+            returnTask.Exception.InnerExceptions.Count().Should().Be(1);
+            returnTask.Exception.InnerException.Message.Should().Be(ResponseCode.bootcampGroupNotFound);
+        }
+
+        [Fact]
+        public void UpdateAsync_BootcampNameIsExist_ThrowOneException()
+        {
+            // Arrange
+            IEnumerable<BootcampGroup> _listBootcampGroup = fixture.CreateMany<BootcampGroup>().ToList();
+            _listBootcampGroup.Last().Id = _bootcampGroupPutDto.Id + 1;
+            _listBootcampGroup.Last().Name = _bootcampGroupPutDto.Name;
+
+            _mockBootcampGroupRepository.Setup(c => c.GetByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(_listBootcampGroup.First()));
+            _mockBootcampGroupRepository.Setup(c => c.GetByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(_listBootcampGroup.Last()));
+
+            // Act
+            Task returnTask = _sut.UpdateAsync(_bootcampGroupPutDto.Id, _bootcampGroupPutDto);
+
+            // Assert
+            returnTask.Exception.InnerExceptions.Count().Should().Be(1);
+            returnTask.Exception.InnerException.Message.Should().Be(ResponseCode.bootcampGroupAlreadyExist);
+        }
+
+        [Fact]
+        public void UpdateAsync_SetToInactiveAndAnyMemberIsStillJoining_ThrowOneException()
+        {
+            // Arrange
+            IEnumerable<BootcampGroup> _listBootcampGroup = fixture.CreateMany<BootcampGroup>().ToList();
+            IEnumerable<UserBootcamp> _listActiveMembersByBootcampGroupId = fixture.CreateMany<UserBootcamp>().ToList();
+
+            _bootcampGroupPutDto.IsActive = false;
+            _listBootcampGroup.Last().Id = _bootcampGroupPutDto.Id;
+            _listBootcampGroup.Last().Name = _bootcampGroupPutDto.Name;
+            _listActiveMembersByBootcampGroupId.ToList().ForEach(am => am.BootcampGroupId = _listBootcampGroup.First().Id);
+
+            _mockBootcampGroupRepository.Setup(c => c.GetByIdAsync(It.IsAny<int>())).Returns(Task.FromResult(_listBootcampGroup.First()));
+            _mockBootcampGroupRepository.Setup(c => c.GetByNameAsync(It.IsAny<string>())).Returns(Task.FromResult(_listBootcampGroup.Last()));
+            _mockUserBootcampRepository.Setup(c => c.GetActiveMembersByBootcampGroupIdAsync(_listBootcampGroup.First().Id)).Returns(Task.FromResult(_listActiveMembersByBootcampGroupId));
+
+            // Act
+            Task returnTask = _sut.UpdateAsync(_bootcampGroupPutDto.Id, _bootcampGroupPutDto);
+
+            // Assert
+            returnTask.Exception.InnerExceptions.Count().Should().Be(1);
+            returnTask.Exception.InnerException.Message.Should().Be(ResponseCode.bootcampGroupCannotBeChangedToInactive);
+        }
     }
 }

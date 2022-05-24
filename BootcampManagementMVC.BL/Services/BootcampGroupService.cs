@@ -55,6 +55,12 @@ namespace BootcampManagementMVC.BL.Services
             return _mapper.Map<IEnumerable<BootcampGroup>, IEnumerable<BootcampGroupDto>>(listBootcampGroup);
         }
 
+        public async Task<BootcampGroupDto> GetByIdAsync(int bootcampGroupId)
+        {
+            BootcampGroup bootcampGroup = await _repoBootcampGroup.GetByIdAsync(bootcampGroupId);
+            return _mapper.Map<BootcampGroup, BootcampGroupDto>(bootcampGroup);
+        }
+
         public async Task<IEnumerable<BootcampGroupAndTotalMemberDto>> GetWithTotalMembersAsync()
         {
             IEnumerable<BootcampGroup> listBootcampGroup = await _repoBootcampGroup.GetAsync();
@@ -90,6 +96,56 @@ namespace BootcampManagementMVC.BL.Services
 
                 return listBootcampGroupAndTotalMember;
             }
+        }
+
+        public async Task UpdateAsync(int bootcampGroupId, BootcampGroupPutDto bootcampGroupDto)
+        {
+            // convert from dto object to model object:
+            BootcampGroup bootcampGroup = _mapper.Map<BootcampGroupPutDto, BootcampGroup>(bootcampGroupDto);
+
+            // check existing data:
+            BootcampGroup bootcampGroupExisting = await _repoBootcampGroup.GetByIdAsync(bootcampGroupId);
+            if (bootcampGroupExisting is null)
+            {
+                throw new Exception(ResponseCode.bootcampGroupNotFound);
+            }
+
+            // check existing name:
+            BootcampGroup bootcampGroupRepo = await _repoBootcampGroup.GetByNameAsync(bootcampGroup.Name);
+            if (bootcampGroupRepo is not null && bootcampGroupRepo.Id != bootcampGroupId)
+            {
+                throw new Exception(ResponseCode.bootcampGroupAlreadyExist);
+            }
+
+            bootcampGroupExisting.IsActive = bootcampGroup.IsActive;
+            bool isValidToInactiveBootcamp = await InactiveBootcampValidation(bootcampGroupExisting);
+            if (!isValidToInactiveBootcamp)
+            {
+                throw new Exception(ResponseCode.bootcampGroupCannotBeChangedToInactive);
+            }
+
+            // edit syllabus data on bootcamp:
+            bootcampGroupExisting.Syllabus.Name = bootcampGroup.Name;
+            bootcampGroup.Syllabus = bootcampGroupExisting.Syllabus;
+
+            // update model to bootcamp_group:
+            await _repoBootcampGroup.UpdateAsync(bootcampGroup);
+        }
+
+        private async Task<bool> InactiveBootcampValidation(BootcampGroup bootcampGroup)
+        {
+            bool isValid = true;
+
+            // check if any member is still joining for inactive bootcamp:
+            IEnumerable<UserBootcamp> listUserBootcamp = await _repoUserBootcamp.GetActiveMembersByBootcampGroupIdAsync(bootcampGroup.Id);
+
+            // check if any members in this bootcamp_group when wants to inactive a bootcamp:
+            if (!bootcampGroup.IsActive && listUserBootcamp.Count() > 0)
+            {
+                isValid = false;
+            }
+
+            return isValid;
         }
     }
 }

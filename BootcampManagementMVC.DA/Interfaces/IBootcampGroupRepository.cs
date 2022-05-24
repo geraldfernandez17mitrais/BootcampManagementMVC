@@ -9,5 +9,7 @@ namespace BootcampManagementMVC.DA.Interfaces
         Task<IEnumerable<BootcampGroup>> GetAsync();
         Task AddAsync(BootcampGroup bootcampGroup);
         Task<BootcampGroup> GetByNameAsync(string bootcampGroupName);
+        Task<BootcampGroup> GetByIdAsync(int bootcampGroupId);
+        Task UpdateAsync(BootcampGroup bootcampGroup);
     }
 }

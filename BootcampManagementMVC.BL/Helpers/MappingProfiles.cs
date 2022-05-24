@@ -15,6 +15,8 @@ namespace BootcampManagementMVC.BL.Helpers
                 .ForMember(dest => dest.SyllabusId, opt => opt.MapFrom(src => src.Syllabus.Id));
             CreateMap<BootcampGroupAndTotalMemberDto, BootcampGroup>();
             CreateMap<BootcampGroupPostDto, BootcampGroup>();
+            CreateMap<BootcampGroupPutDto, BootcampGroup>();
+            CreateMap<BootcampGroupDto, BootcampGroupPutDto>();
 
             // UserBootcamp:
             CreateMap<UserBootcampDto, UserBootcamp>().ReverseMap();

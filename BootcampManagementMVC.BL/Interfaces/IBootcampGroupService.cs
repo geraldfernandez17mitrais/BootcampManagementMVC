@@ -9,5 +9,7 @@ namespace BootcampManagementMVC.BL.Interfaces
         Task<IEnumerable<BootcampGroupDto>> GetAsync();
         Task<IEnumerable<BootcampGroupAndTotalMemberDto>> GetWithTotalMembersAsync();
         Task AddAsync(BootcampGroupPostDto bootcampGroupPostDto);
+        Task<BootcampGroupDto> GetByIdAsync(int bootcampGroupId);
+        Task UpdateAsync(int bootcampGroupId, BootcampGroupPutDto bootcampGroupDto);
     }
 }

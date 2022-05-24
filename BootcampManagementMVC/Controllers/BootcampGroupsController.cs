@@ -1,4 +1,5 @@
-﻿using BootcampManagementMVC.BL.Dtos.BootcampGroups;
+﻿using AutoMapper;
+using BootcampManagementMVC.BL.Dtos.BootcampGroups;
 using BootcampManagementMVC.BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,10 +11,12 @@ namespace BootcampManagementMVC.Controllers
     public class BootcampGroupsController : Controller
     {
         private readonly IBootcampGroupService _serviceBootcampGroup;
+        private readonly IMapper _mapper;
 
-        public BootcampGroupsController(IBootcampGroupService serviceBootcampGroup)
+        public BootcampGroupsController(IBootcampGroupService serviceBootcampGroup, IMapper mapper)
         {
             _serviceBootcampGroup = serviceBootcampGroup;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
@@ -44,6 +47,39 @@ namespace BootcampManagementMVC.Controllers
             {
                 ViewBag.ExceptionMessage = ex.Message;
                 return View(bootcampGroupPostDto);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Get: BootcampGroups/Update/1
+        public async Task<ActionResult> Update(int id)
+        {
+            BootcampGroupDto bootcampGroupDto = await _serviceBootcampGroup.GetByIdAsync(id);
+            BootcampGroupPutDto bootcampGroupPutDto = _mapper.Map<BootcampGroupDto, BootcampGroupPutDto>(bootcampGroupDto);
+
+            if (bootcampGroupPutDto == null)
+                return View("NotFound");
+
+            return View(bootcampGroupPutDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, [Bind("Id, Name, Description, IsActive")] BootcampGroupPutDto bootcampGroupPutDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(bootcampGroupPutDto);
+            }
+
+            try
+            {
+                await _serviceBootcampGroup.UpdateAsync(id, bootcampGroupPutDto);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ExceptionMessage = ex.Message;
+                return View(bootcampGroupPutDto);
             }
 
             return RedirectToAction(nameof(Index));

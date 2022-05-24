@@ -30,6 +30,21 @@ namespace BootcampManagementMVC.DA.Repositories
             }
         }
 
+        public async Task<IEnumerable<UserBootcamp>> GetActiveMembersByBootcampGroupIdAsync(int bootcampGroupId)
+        {
+            try
+            {
+                IEnumerable<UserBootcamp> listUserBootcamp = await _context.user_bootcamps.ToListAsync();
+                return listUserBootcamp
+                    .Where(lub => lub.IsActive == true && lub.BootcampGroupId == bootcampGroupId)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<IEnumerable<UserBootcamp>> GetAsync()
         {
             try
